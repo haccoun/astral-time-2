@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astral TIME 2026 | Fiker Yelekale</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #5900ff;
+            --accent: #5900ff7c;
+            --bg: #05050a;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg);
+            color: white;
+            font-family: 'Inter', sans-serif;
+            background-image: radial-gradient(circle at 50% 50%, #111122 0%, #05050a 100%);
+            background-attachment: fixed;
+        }
+
+        .site-logo {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+            z-index: 1000;
+            object-fit: cover;
+            background: #000;
+        }
+
+        header {
+            padding: 5rem 1rem 3rem 1rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            letter-spacing: 8px;
+            margin: 0;
+            background: linear-gradient(to right, #00d4ff, #7000ff, #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+              padding: 20px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .month-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+        }
+
+        .month-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.1);
+        }
+
+        .month-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .month-content {
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .month-label {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .event-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+
+        /* --- MODAL POPUP DESIGN --- */
+        #details-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(20px);
+            padding: 20px;
+        }
+
+        .modal-box {
+            background: #0a0a15;
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 40px;
+            position: relative;
+        }
+
+        .close-btn {
+            position: sticky;
+            top: 0; float: right;
+            color: var(--primary);
+            font-family: 'Orbitron';
+            cursor: pointer;
+            font-size: 1.5rem;
+            z-index: 10;
+        }
+
+        .modal-section { margin-top: 30px; }
+        .modal-section h4 { color: var(--primary); font-family: 'Orbitron'; font-size: 0.9rem; margin-bottom: 12px; border-bottom: 1px solid #333; padding-bottom: 5px; }
+        .modal-section p { font-size: 1rem; line-height: 1.8; color: #eee; margin-bottom: 15px; }
+
+        .newsletter-section {
+            margin: 80px 0;
+            padding: 40px;
+            background: rgba(112, 0, 255, 0.05);
+            border: 1px solid var(--accent);
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .author-tag {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary);
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7n-JVWg4_aeRFTtJ_ojh0DKfLOA8EGJQSjg&s" class="site-logo" alt="Logo">
+
+    <header>
+        <h1>ASTRAL TIME</h1>
+        <p style="opacity: 0.6; letter-spacing: 3px;">OFFICIAL 2026 SPACE CALENDAR</p>
+    </header>
+
+    <div class="container">
+        <div class="calendar-grid" id="calendar">
+            </div>
+
+        <div class="newsletter-section">
+            <h3>STAY SYNCED WITH ASTRAL TIME</h3>
+            <form class="subscribe-form" id="newsletterForm">
+                <input type="email" placeholder="ENTER YOUR EMAIL..." required style="background:rgba(0,0,0,0.5); border:1px solid #444; padding:12px; border-radius:5px; color:white; width:250px;">
+                <button type="submit" style="background:var(--primary); border:none; padding:12px 25px; border-radius:5px; font-family:'Orbitron'; cursor:pointer;">SUBSCRIBE</button>
+            </form>
+            <p id="successMessage" style="display:none; color: var(--primary); margin-top: 20px; font-family: 'Orbitron';">TRANSMISSION RECEIVED.</p>
+        </div>
+    </div>
+
+    <div id="details-modal">
+        <div class="modal-box">
+            <span class="close-btn" onclick="closeModal()">×</span>
+            <div id="modalData"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="author-tag">FIKER YELEKALE</div>
+    </footer>
+
+    <script>
+        const missionData = [
+            {
+                m: "January", t: "Jupiter at Opposition", d: "Jan 10, 2026",
+                img: "https://images.unsplash.com/photo-1630839437035-dac17da580d0?w=800",
+                p: [
+                    "Opposition is the astronomical highlight for any planet, occurring when Earth passes directly between the Sun and that planet. For Jupiter in 2026, this means the gas giant will be at its absolute closest point to our world, shining with a steady, brilliant golden light that dominates the midnight sky.",
+                    "From a scientific perspective, opposition allows astronomers to see Jupiter's atmosphere in its most 'full' phase. The sunlight hits the planet directly from our point of view, eliminating shadows and revealing the intricate details of the Great Red Spot and the colorful cloud belts with maximum contrast.",
+                    "Historically, these events were the only way early astronomers could map the Jovian system. Even with primitive telescopes, 17th-century observers noticed that Jupiter's moons seemed to move faster during opposition, a clue that helped calculate the actual speed of light.",
+                    "Culturally, Jupiter has always represented the 'King of Planets.' In 2026, its position in the constellation Gemini makes it a centerpiece for winter stargazing in the Northern Hemisphere, providing a bright beacon for travelers and skywatchers alike.",
+                    "To observe this, you don't need a massive telescope. A simple pair of 10x50 binoculars will reveal the four Galilean moons—Io, Europa, Ganymede, and Callisto—as tiny points of light flanking the massive planet's disk."
+                ]
+            },
+            {
+                m: "February", t: "Annular Solar Eclipse", d: "Feb 17, 2026",
+                img: "https://images.unsplash.com/photo-1506466010722-395aa2bef877?w=800",
+                p: [
+                    "An Annular Solar Eclipse, famously known as a 'Ring of Fire,' happens when the Moon is at its furthest point from Earth (apogee). Because it appears smaller in our sky, it cannot completely cover the Sun, leaving a thin, blazing ring of light visible around its dark silhouette.",
+                    "The 2026 eclipse path is quite rare, sweeping across the remote wilderness of East Antarctica and parts of the Southern Indian Ocean. This makes it a primary target for scientific expeditions looking to study the solar corona under unique atmospheric conditions.",
+                    "Technically, an annular eclipse provides a unique opportunity to observe the Sun's 'Baily's Beads'—the sunlight peeking through the jagged mountains and valleys of the lunar horizon just as the ring forms and breaks.",
+                    "Throughout history, these 'broken' eclipses were often viewed with more mystery than total ones. While a total eclipse brings darkness, the annular ring creates a haunting, twilight-like glow that changes the behavior of local wildlife and drops the temperature rapidly.",
+                    "Warning: Because the Sun's disk is never fully covered, you must use ISO-certified solar filters or eclipse glasses at all times. Looking at the 'Ring of Fire' with the naked eye can cause permanent retinal damage in a matter of seconds."
+                ]
+            },
+            {
+                m: "March", t: "Total Lunar Eclipse", d: "Mar 3, 2026",
+                img: "https://images.unsplash.com/photo-1505101511318-7355645763d2?w=800",
+                p: [
+                    "A Total Lunar Eclipse occurs when the Earth's shadow (the umbra) completely engulfs the Moon. Unlike a solar eclipse, the Moon doesn't go black; it turns a deep, dramatic red, earning the nickname 'Blood Moon.'",
+                    "This red color is actually caused by Earth's atmosphere. As sunlight passes through our air, the blue light is scattered away, and only the long-wavelength red light is bent inward toward the Moon—essentially, the Moon is being illuminated by every sunrise and sunset on Earth at once.",
+                    "In 2026, this event will be visible across much of Asia, Australia, and the Americas. The 'totality' phase—when the Moon is completely in shadow—is expected to last nearly an hour, giving photographers plenty of time to capture the transformation.",
+                    "Ancient civilizations often viewed the Blood Moon as an omen, but for modern scientists, it’s a way to measure the cleanliness of Earth’s atmosphere. Following large volcanic eruptions, the Moon often looks much darker or even brownish during an eclipse due to ash in our air.",
+                    "You don't need any special equipment to watch this. It is 100% safe to view with the naked eye. For the best experience, find a dark park away from city lights and watch as the Earth's curved shadow slowly 'eats' the lunar surface."
+                ]
+            },
+            {
+                m: "April", t: "Lyrids Meteor Shower", d: "Apr 22, 2026",
+                img: "https://images.unsplash.com/photo-1506318137071-a8e063b4bcc0?w=800",
+                p: [
+                    "The Lyrids are one of the oldest recorded meteor showers, with Chinese astronomers documenting 'stars falling like rain' as far back as 687 BC. They are caused by the debris trail of Comet C/1861 G1 Thatcher, which visits the inner solar system every 415 years.",
+                    "Every April, Earth passes through this stream of space dust. These particles, often no larger than a grain of sand, strike our upper atmosphere at 110,000 miles per hour, vaporizing into the bright streaks of light we call shooting stars.",
+                    "While the Lyrids usually produce about 15-20 meteors per hour, they are famous for rare 'outbursts.' Occasionally, Earth hits a denser clump of comet debris, and the rate can suddenly jump to over 100 meteors per hour for a short window.",
+                    "The meteors appear to radiate from the constellation Lyra, near the bright blue-white star Vega. Because Vega is one of the brightest stars in the sky, it makes a perfect landmark for finding the shower's origin point.",
+                    "The best viewing in 2026 will be in the early morning hours after the Moon has set. Lie flat on your back, look straight up, and give your eyes at least 20 minutes to adjust to the darkness for the best chance of spotting faint streaks."
+                ]
+            },
+            {
+                m: "May", t: "Eta Aquariids", d: "May 6, 2026",
+                img: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=800",
+                p: [
+                    "The Eta Aquariids are a unique meteor shower because their parent is none other than the famous Halley’s Comet. While the comet itself only visits Earth every 76 years, we pass through its discarded tail of dust every May.",
+                    "These meteors are known for their incredible speed. Because Earth is hitting the debris stream almost head-on, these particles enter the atmosphere much faster than other showers, often leaving glowing 'trains' of ionized gas that last for several seconds.",
+                    "In the Southern Hemisphere, this is one of the best shows of the year, with up to 50 meteors visible per hour. In the Northern Hemisphere, the radiant sits lower on the horizon, but you can still catch 'earthgrazers'—long, slow meteors that streak across the horizon.",
+                    "The 2026 peak happens under a waning gibbous moon, which can make things tricky. To see them, you'll need to look in the hours just before dawn when the constellation Aquarius has risen high enough above the horizon.",
+                    "Stargazing tip: Don't look directly at the radiant point. The meteors with the longest tails will actually appear about 30 degrees away from the constellation Aquarius, so scan the sky broadly."
+                ]
+            },
+            {
+                m: "June", t: "Strawberry Moon", d: "Jun 15, 2026",
+                img: "1000060663.jpg", // USING YOUR UPLOADED IMAGE
+                p: [
+                    "The June Full Moon, known as the Strawberry Moon, will be a 'Supermoon' in 2026. This happens when the Full Moon coincides with perigee—the Moon's closest approach to Earth—making it look 14% larger and 30% brighter than usual.",
+                    "The name 'Strawberry Moon' comes from the Algonquin tribes of North America, who used this moon as a signal to gather the ripening wild strawberries. It has nothing to do with the color, though your uploaded image perfectly captures a pinkish hue often seen near the horizon.",
+                    "Because the June solstice occurs around this time, the Moon sits very low in the sky for the Northern Hemisphere. This low position forces the moonlight to travel through more of Earth's atmosphere, which often filters out blue light and leaves a warm, golden, or reddish glow.",
+                    "Scientifically, Supermoons create higher 'perigean' tides. For a few days around June 15th, coastal areas may experience slightly higher water levels than usual due to the Moon's increased gravitational pull.",
+                    "To capture the best view, watch the Moon rise over the eastern horizon at sunset. The 'Moon Illusion'—a trick of the human brain—will make it look absolutely massive when it is positioned next to trees or buildings."
+                ]
+            },
+            {
+                m: "July", t: "Delta Aquariids", d: "Jul 28, 2026",
+                img: "https://images.unsplash.com/photo-1543722530-d2c3201371e7?w=800",
+                p: [
+                    "The Delta Aquariids are a steady, long-lasting meteor shower that officially peaks in late July but provides good viewing for several weeks. They are best known for leaving 'persistent trains'—glowing trails of ionized gas that linger for a second or two after the meteor has passed.",
+                    "The origin of this shower was a mystery for decades until it was linked to Comet 96P/Machholz. This comet is an astronomical oddity; its orbit takes it closer to the Sun than any other periodic comet, reaching 8 times closer than Earth.",
+                    "Recent studies suggest that the material hitting our atmosphere today actually left the comet's nucleus about 20,000 years ago. You are essentially watching prehistoric dust burn up in our atmosphere.",
+                    "This shower is a 'double radiant' event, with two distinct streams of particles entering from different parts of the constellation Aquarius. This results in a consistent flow of meteors rather than a sharp, short-lived peak.",
+                    "In 2026, the Moon will be near-New during the peak, providing perfectly black skies. This is critical because Delta Aquariids are often faint; to see them, you must find a location far from city lights and allow your eyes 30 minutes to adapt to the darkness."
+                ]
+            },
+            {
+                m: "August", t: "Total Solar Eclipse", d: "Aug 12, 2026",
+                img: "https://images.unsplash.com/photo-1538370910016-0d3c07e63976?w=800",
+                p: [
+                    "This is the 'Great European Eclipse' of 2026. The path of totality will sweep across the Arctic, Greenland, Iceland, and Northern Spain. It is the first total solar eclipse to touch continental Europe in 27 years, making it a massive global event.",
+                    "During totality, the Sun’s atmosphere—the corona—becomes visible as a ghostly, shimmering halo. This is the only time humans can see the corona with the naked eye, as the Moon perfectly blocks the overwhelming glare of the Sun's surface.",
+                    "In Iceland, the path covers the capital city, Reykjavík, while in Spain, it will cross major cities like Zaragoza and Valencia just before sunset. The eclipse will be very low in the sky in Spain, creating a dramatic, 'golden-hour' totality.",
+                    "Scientists will use this event to study the solar wind and the Sun's magnetic field. Because the eclipse happens during the approach to a solar maximum, the corona is expected to be particularly active, with visible solar flares and prominences.",
+                    "If you are traveling for this, mobility is key. Weather in Iceland and Northern Spain can be unpredictable; checking satellite maps on the morning of August 12th to find clear skies could be the difference between a life-changing experience and a cloudy afternoon."
+                ]
+            },
+            {
+                m: "September", t: "Neptune at Opposition", d: "Sept 25, 2026",
+                img: "https://images.unsplash.com/photo-1614313913007-2b4ae8ce32d6?w=800",
+                p: [
+                    "Neptune, the most distant major planet in our solar system, reaches opposition on September 25, 2026. At this moment, it is 180 degrees from the Sun, making it visible all night long in the constellation Pisces.",
+                    "Neptune is the only planet that cannot be seen with the naked eye. Even at its brightest during opposition, it shines at a faint magnitude 7.8. To find it, you will need a good pair of binoculars or a telescope and a detailed star chart.",
+                    "Through a telescope, Neptune appears as a tiny, steady blue disc. This blue color is caused by methane in the planet's upper atmosphere, which absorbs red light and reflects the blue wavelengths back into space.",
+                    "Historically, Neptune is the 'planet of mathematics.' Its existence was predicted by Urbain Le Verrier using Newton’s laws of gravity to explain wobbles in Uranus's orbit, before it was ever actually seen through a telescope in 1846.",
+                    "If you have a medium-sized telescope (8 inches or larger), you might even be able to spot Triton, Neptune’s largest moon. Triton is unique because it orbits in the opposite direction of the planet’s rotation, suggesting it was once a stray object captured by Neptune's gravity."
+                ]
+            },
+            {
+                m: "October", t: "Saturn at Opposition", d: "Oct 4, 2026",
+                img: "https://images.unsplash.com/photo-1614732484003-ef9881555dc3?w=800",
+                p: [
+                    "Saturn reaches its peak visibility on October 4, 2026. At opposition, the gas giant is at its closest point to Earth, and its famous rings are fully illuminated, making it the 'jewel of the solar system' for telescope observers.",
+                    "2026 is a special year for Saturn because the rings are tilted nearly edge-on from our perspective. This rare geometry allows us to see how incredibly thin the rings actually are—thousands of miles wide but less than 30 feet thick in most places.",
+                    "The planet will shine at a magnitude of 0.3, appearing as a bright, yellowish 'star' in the constellation Cetus. Unlike stars, which twinkle due to atmospheric turbulence, Saturn will glow with a steady, unblinking light.",
+                    "Through a small telescope, the rings are immediately visible. High magnification can reveal the Cassini Division—a dark gap between the A and B rings—and several of Saturn's moons, including the massive Titan, which has its own atmosphere.",
+                    "Observation tip: The best views occur around midnight when Saturn is highest in the sky. Looking through the 'thick' atmosphere near the horizon causes blurring; waiting for the planet to reach its peak altitude ensures the sharpest possible image of the rings."
+                ]
+            },
+            {
+                m: "November", t: "Leonids Peak", d: "Nov 17, 2026",
+                img: "https://images.unsplash.com/photo-1504333638930-c8787321eee0?w=800",
+                p: [
+                    "The Leonids are famous for being the most dramatic meteor shower in history. Every 33 years, when their parent comet 55P/Tempel-Tuttle passes near the Sun, they can produce 'meteor storms' with thousands of shooting stars per hour.",
+                    "While 2026 is not a storm year, the Leonids remain a high-speed favorite. The particles strike Earth head-on at 44 miles per second (160,000 mph), making them the fastest of all annual meteor showers and often producing bright 'fireballs.'",
+                    "The radiant point for the shower is the 'Sickle'—a backwards question mark of stars that forms the head of Leo the Lion. In 2026, both Jupiter and Mars will be positioned near Leo, adding extra brilliance to the night sky.",
+                    "The Leonids have inspired awe for centuries. The Great Storm of 1833 was so intense that it was described as 'falling like snow,' leading many people at the time to believe the world was coming to an end.",
+                    "In 2026, the Moon will be a waxing gibbous, but it sets just before midnight. The best strategy is to sleep early and head outside between 3:00 AM and dawn, when the constellation Leo is high in the sky and the Moon has vanished."
+                ]
+            },
+            {
+                m: "December", t: "Supermoon Close-Up", d: "Dec 24, 2026",
+                img: "https://images.unsplash.com/photo-1475113548554-5a36f1f523d6?w=800",
+                p: [
+                    "The year 2026 ends with a spectacular holiday Supermoon on Christmas Eve. This occurs when the full moon coincides with its perigee, making it physically closer to Earth and visually more imposing than a standard full moon.",
+                    "Scientifically, the Moon's orbit is not a perfect circle but an ellipse. On December 24th, it will be roughly 225,000 miles away, which is nearly 30,000 miles closer than its furthest point, resulting in a significantly brighter night sky.",
+                    "Historically, a full moon on Christmas Eve is a rare event that follows a 19-year cycle known as the Metonic Cycle. The last one occurred in 2015, and after 2026, we won't see another one until 2045.",
+                    "The brilliance of a winter Supermoon is enhanced by the cold air, which is often drier and clearer, allowing for crisp, sharp views of the lunar 'seas' (maria) and the white rays extending from the Tycho crater.",
+                    "Viewing tip: If there is snow on the ground, the Supermoon will be so bright that you can easily read a book outside without any other light source. It's the perfect night for a midnight walk to enjoy the celestial glow."
+                ]
+            }
+        ];
+
+        const grid = document.getElementById('calendar');
+        missionData.forEach((item, index) => {
+            grid.innerHTML += `
+                <div class="month-card" onclick="openModal(${index})">
+                    <img src="${item.img}" class="month-img" alt="${item.t}">
+                    <div class="month-content">
+                        <span class="month-label">${item.m}</span>
+                        <h3 class="event-title">${item.t}</h3>
+                        <p style="font-size:0.85rem; color:#ccc; line-height:1.4;">${item.p[0].substring(0, 80)}...</p>
+                        <div style="font-weight:bold; font-size:0.8rem; border-top:1px solid #444; margin-top:15px; padding-top:10px;">
+                            ${item.d}
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+
+        function openModal(idx) {
+            const data = missionData[idx];
+            const display = document.getElementById('modalData');
+            const sections = ["Overview", "Science", "History", "Context", "Observer's Guide"];
+            
+            let content = `
+                <h2 style="font-family:'Orbitron'; color:var(--primary);">${data.t}</h2>
+                <p style="opacity:0.6;">EVENT DATE: ${data.d}</p>
+                <img src="${data.img}" style="width:100%; height:350px; object-fit:cover; border-radius:15px; border:1px solid #333;">
+            `;
+
+            data.p.forEach((para, i) => {
+                content += `
+                    <div class="modal-section">
+                        <h4>${sections[i]}</h4>
+                        <p>${para}</p>
+                    </div>
+                `;
+            });
+
+            display.innerHTML = content;
+            document.getElementById('details-modal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('details-modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            this.style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
